@@ -102,7 +102,6 @@ namespace FubuMVC.UI
             return page.Tags(model).InputFor(expression);
         }
 
-
         /// <summary>
         /// Builds a tag that displays the name of a property on the page's view model
         /// </summary>

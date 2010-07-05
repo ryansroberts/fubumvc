@@ -2,6 +2,8 @@ using System.Web.Routing;
 using FubuCore;
 using FubuMVC.Core;
 using FubuMVC.StructureMap;
+using FubuMVC.View.Spark;
+using Microsoft.Practices.ServiceLocation;
 using Spark.Web.FubuMVC.ViewCreation;
 using StructureMap;
 
@@ -26,10 +28,16 @@ namespace Spark.Web.FubuMVC.Bootstrap
             UrlContext.Reset();
 
             ObjectFactory.Initialize(x =>
-                                         {
-                                             x.For<ISparkSettings>().Use<SparkSettings>();
-                                             x.For(typeof(ISparkViewRenderer<>)).Use(typeof(SparkViewRenderer<>));
-                                         });
+                {
+                    x.For<ISparkSettings>().Use<SparkSettings>();
+                    x.For(typeof (ISparkViewRenderer<>)).Use(typeof (SparkViewRenderer<>));
+
+                    x.SetAllProperties(s =>
+                        {
+                            s.Matching(p => p.DeclaringType == typeof(FubuSparkPageView));
+                            s.OfType<IServiceLocator>();
+                        });
+                });
 
             var bootstrapper = new StructureMapBootstrapper(ObjectFactory.Container, fubuRegistry);
             bootstrapper.Bootstrap(_routes);
