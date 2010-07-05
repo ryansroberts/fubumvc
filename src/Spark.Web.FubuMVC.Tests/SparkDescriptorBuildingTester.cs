@@ -11,6 +11,7 @@ using Spark.FileSystem;
 using Spark.Parser;
 using Spark.Web.FubuMVC.Tests.Controllers;
 using Spark.Web.FubuMVC.ViewLocation;
+using StructureMap;
 
 namespace Spark.Web.FubuMVC.Tests
 {
@@ -24,7 +25,7 @@ namespace Spark.Web.FubuMVC.Tests
         {
             CompiledViewHolder.Current = null;
 
-            _factory = new SparkViewFactory();
+            _factory = new SparkViewFactory(new SparkSettings(), MockRepository.GenerateStub<IContainer>());
             _viewFolder = new InMemoryViewFolder();
             _factory.ViewFolder = _viewFolder;
             var httpContext = MockRepository.GenerateStub<HttpContextBase>();

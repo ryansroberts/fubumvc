@@ -1,6 +1,7 @@
 using System.Web.Routing;
 using FubuCore;
 using FubuMVC.Core;
+using FubuMVC.Core.Runtime;
 using FubuMVC.StructureMap;
 using FubuMVC.View.Spark;
 using Microsoft.Practices.ServiceLocation;
@@ -29,8 +30,21 @@ namespace Spark.Web.FubuMVC.Bootstrap
 
             ObjectFactory.Initialize(x =>
                 {
-                    x.For<ISparkSettings>().Use<SparkSettings>();
-                    x.For(typeof (ISparkViewRenderer<>)).Use(typeof (SparkViewRenderer<>));
+
+                    x.For<ISparkSettings>()
+                        .Use<SparkSettings>();
+                    
+                    x.For<SparkViewFactory>()
+                        .Singleton();
+
+                    x.For<IServiceLocator>()
+                        .Use<StructureMapServiceLocator>();
+
+                    x.For<ISessionState>()
+                        .Use<SimpleSessionState>();
+
+                    x.For(typeof (ISparkViewRenderer<>))
+                        .Use(typeof (SparkViewRenderer<>));
 
                     x.SetAllProperties(s =>
                         {

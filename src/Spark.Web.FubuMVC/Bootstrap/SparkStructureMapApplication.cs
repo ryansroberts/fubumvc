@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Web;
 using System.Web.Routing;
 using FubuMVC.Core;
+using StructureMap;
 
 namespace Spark.Web.FubuMVC.Bootstrap
 {
@@ -11,7 +12,6 @@ namespace Spark.Web.FubuMVC.Bootstrap
     {
         private string _controllerAssembly;
         private bool? _enableDiagnostics;
-        private SparkViewFactory _viewFactory;
 
         public bool EnableDiagnostics
         {
@@ -27,14 +27,7 @@ namespace Spark.Web.FubuMVC.Bootstrap
 
         public SparkViewFactory ViewFactory
         {
-            get { return _viewFactory ?? CreateViewFactory(); }
-            set { _viewFactory = value; }
-        }
-
-        private static SparkViewFactory CreateViewFactory()
-        {
-            //This is the default, but don't forget, you can customize a ton of Spark settings here.
-            return new SparkViewFactory(new SparkSettings());
+            get { return ObjectFactory.GetInstance<SparkViewFactory>(); }
         }
 
         private static string FindClientCodeAssembly(Assembly globalAssembly)
