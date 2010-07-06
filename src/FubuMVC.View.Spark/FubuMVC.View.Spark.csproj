@@ -58,6 +58,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\spark\Spark.dll</HintPath>
     </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -70,6 +73,7 @@
     <Compile Include="SparkFilePathExistsFilter.cs" />
     <Compile Include="FubuSparkView.cs" />
     <Compile Include="RenderSparkFubuViewBehavior.cs" />
+    <Compile Include="SparkViewActivator.cs" />
     <Compile Include="SparkViewEngine.cs" />
     <Compile Include="SparkViewNode.cs" />
     <Compile Include="SparkViewToken.cs" />

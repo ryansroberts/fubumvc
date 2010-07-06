@@ -12,7 +12,6 @@ using Spark.Web.FubuMVC.Tests.Controllers;
 using Spark.Web.FubuMVC.Tests.Helpers;
 using Spark.Web.FubuMVC.Tests.Models;
 using Spark.Web.FubuMVC.ViewCreation;
-using StructureMap;
 
 namespace Spark.Web.FubuMVC.Tests
 {
@@ -27,7 +26,7 @@ namespace Spark.Web.FubuMVC.Tests
             CompiledViewHolder.Current = null; //clear the view cache
 
             var settings = new SparkSettings();
-            _factory = new SparkViewFactory(settings, MockRepository.GenerateStub<IContainer>()) { ViewFolder = new FileSystemViewFolder("FubuMVC.Tests.Views") };
+            _factory = new SparkViewFactory(settings) { ViewFolder = new FileSystemViewFolder("FubuMVC.Tests.Views") };
 
             _httpContext = MockHttpContextBase.Generate("/", new StringWriter());
             _response = _httpContext.Response;
@@ -360,6 +359,7 @@ namespace Spark.Web.FubuMVC.Tests
                 "<div>Hello</div>");
         }
 
+        [Test,Ignore]
         public void should_be_able_to_use_the_html_tags_assembly()
         {
             ((SparkSettings) _factory.Settings).AddNamespace("HtmlTags");

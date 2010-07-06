@@ -1,3 +1,4 @@
+
 using System.Web.Routing;
 using FubuCore;
 using FubuMVC.Core;
@@ -7,9 +8,10 @@ using FubuMVC.View.Spark;
 using Microsoft.Practices.ServiceLocation;
 using Spark.Web.FubuMVC.ViewCreation;
 using StructureMap;
-
+using IFubuViewActivator = FubuMVC.Core.View.IViewActivator;
 namespace Spark.Web.FubuMVC.Bootstrap
 {
+   
     public class SparkStructureMapBootstrapper
     {
         private readonly RouteCollection _routes;
@@ -45,6 +47,9 @@ namespace Spark.Web.FubuMVC.Bootstrap
 
                     x.For(typeof (ISparkViewRenderer<>))
                         .Use(typeof (SparkViewRenderer<>));
+
+                    x.For<IFubuViewActivator>()
+                        .Use<SparkViewActivator>();
 
                     x.SetAllProperties(s =>
                         {

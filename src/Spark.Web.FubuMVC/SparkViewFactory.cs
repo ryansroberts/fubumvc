@@ -12,22 +12,19 @@ using Spark.FileSystem;
 using Spark.Web.FubuMVC.Extensions;
 using Spark.Web.FubuMVC.ViewCreation;
 using Spark.Web.FubuMVC.ViewLocation;
-using StructureMap;
 
 namespace Spark.Web.FubuMVC
 {
     public class SparkViewFactory
     {
-        readonly IContainer _container;
         private readonly Dictionary<BuildDescriptorParams, ISparkViewEntry> _cache = new Dictionary<BuildDescriptorParams, ISparkViewEntry>();
         private ICacheServiceProvider _cacheServiceProvider;
         private IDescriptorBuilder _descriptorBuilder;
         private ISparkViewEngine _engine;
 
 
-        public SparkViewFactory(ISparkSettings settings, IContainer container)
+        public SparkViewFactory(ISparkSettings settings)
         {
-            _container = container;
             Settings = settings ?? (ISparkSettings) ConfigurationManager.GetSection("spark") ?? new SparkSettings();
         }
 
@@ -208,7 +205,6 @@ namespace Spark.Web.FubuMVC
         private ViewEngineResult BuildResult(HttpContextBase httpContext, ISparkViewEntry entry)
         {
             ISparkView view = entry.CreateInstance();
-            _container.BuildUp(view);
             if (view is SparkView)
             {
                 var sparkView = (SparkView) view;

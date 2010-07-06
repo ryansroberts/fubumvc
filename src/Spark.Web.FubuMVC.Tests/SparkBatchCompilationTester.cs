@@ -1,9 +1,7 @@
 ﻿using System.Linq;
 using NUnit.Framework;
-using Rhino.Mocks;
 using Spark.FileSystem;
 using Spark.Web.FubuMVC.Tests.Controllers;
-using StructureMap;
 
 namespace Spark.Web.FubuMVC.Tests
 {
@@ -19,7 +17,7 @@ namespace Spark.Web.FubuMVC.Tests
         {
             var settings = new SparkSettings();
 
-            _factory = new SparkViewFactory(settings, MockRepository.GenerateStub<IContainer>()) { ViewFolder = new FileSystemViewFolder("FubuMVC.Tests.Views") };
+            _factory = new SparkViewFactory(settings) { ViewFolder = new FileSystemViewFolder("FubuMVC.Tests.Views") };
         }
 
         #endregion

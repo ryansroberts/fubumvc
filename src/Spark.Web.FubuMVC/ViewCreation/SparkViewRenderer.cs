@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Web;
 using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.Core.View;
+using Microsoft.Practices.ServiceLocation;
+using StructureMap;
 
 namespace Spark.Web.FubuMVC.ViewCreation
 {
@@ -29,7 +32,7 @@ namespace Spark.Web.FubuMVC.ViewCreation
             string viewName = viewToken.Name;
 
             ISparkView sparkView = _viewFactory.FindView(_httpContext, actionNamespace, actionName, viewName, null);
-
+        
             var configurableView = sparkView as T;
             if (configurableView != null)
                 configureView(configurableView);
