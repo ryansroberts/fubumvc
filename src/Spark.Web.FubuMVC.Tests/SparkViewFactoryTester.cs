@@ -8,6 +8,7 @@ using FubuMVC.Core.Runtime;
 using NUnit.Framework;
 using Rhino.Mocks;
 using Spark.FileSystem;
+using Spark.Web.FubuMVC.Configuration;
 using Spark.Web.FubuMVC.Tests.Controllers;
 using Spark.Web.FubuMVC.Tests.Helpers;
 using Spark.Web.FubuMVC.Tests.Models;
@@ -25,8 +26,7 @@ namespace Spark.Web.FubuMVC.Tests
         {
             CompiledViewHolder.Current = null; //clear the view cache
 
-            var settings = new SparkSettings();
-            _factory = new SparkViewFactory(settings) { ViewFolder = new FileSystemViewFolder("FubuMVC.Tests.Views") };
+            _factory = new SparkViewFactory(new TestSparkSettingsFactory()) {ViewFolder = new FileSystemViewFolder("FubuMvc.Tests.Views")};
 
             _httpContext = MockHttpContextBase.Generate("/", new StringWriter());
             _response = _httpContext.Response;
@@ -362,7 +362,6 @@ namespace Spark.Web.FubuMVC.Tests
         [Test,Ignore]
         public void should_be_able_to_use_the_html_tags_assembly()
         {
-            ((SparkSettings) _factory.Settings).AddNamespace("HtmlTags");
             FindViewAndRender("HtmlTags", null);
 
             string content = _output.ToString();

@@ -73,7 +73,7 @@
     <Compile Include="SparkFilePathExistsFilter.cs" />
     <Compile Include="FubuSparkView.cs" />
     <Compile Include="RenderSparkFubuViewBehavior.cs" />
-    <Compile Include="SparkViewActivator.cs" />
+    <Compile Include="StructuremapSparkViewBuilder.cs" />
     <Compile Include="SparkViewEngine.cs" />
     <Compile Include="SparkViewNode.cs" />
     <Compile Include="SparkViewToken.cs" />

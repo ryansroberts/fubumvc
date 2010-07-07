@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Routing;
 using Spark.Compiler;
 using Spark.FileSystem;
+using Spark.Web.FubuMVC.Configuration;
 using Spark.Web.FubuMVC.Extensions;
 using Spark.Web.FubuMVC.ViewCreation;
 using Spark.Web.FubuMVC.ViewLocation;
@@ -17,21 +18,27 @@ namespace Spark.Web.FubuMVC
 {
     public class SparkViewFactory
     {
+        readonly ISparkSettingsFactory _sparkSettingsFactory;
         private readonly Dictionary<BuildDescriptorParams, ISparkViewEntry> _cache = new Dictionary<BuildDescriptorParams, ISparkViewEntry>();
         private ICacheServiceProvider _cacheServiceProvider;
         private IDescriptorBuilder _descriptorBuilder;
-        private ISparkViewEngine _engine;
+        private ISparkViewEngine _defaultengine;
 
 
-        public SparkViewFactory(ISparkSettings settings)
+        public SparkViewFactory(ISparkSettingsFactory sparkSettingsFactory)
         {
-            Settings = settings ?? (ISparkSettings) ConfigurationManager.GetSection("spark") ?? new SparkSettings();
+            _sparkSettingsFactory = sparkSettingsFactory;
         }
 
-        public IViewFolder ViewFolder
+        public ISparkViewEngine Engine
         {
-            get { return Engine.ViewFolder; }
-            set { Engine.ViewFolder = value; }
+            get
+            {
+                return _defaultengine ?? (_defaultengine = new SparkViewEngine(_sparkSettingsFactory.GetSettings())
+                                                               {
+                                                                   DefaultPageBaseType = typeof (SparkView).FullName
+                                                               });
+            }
         }
 
         public IDescriptorBuilder DescriptorBuilder
@@ -45,19 +52,7 @@ namespace Spark.Web.FubuMVC
             set { _descriptorBuilder = value; }
         }
 
-        public ISparkSettings Settings { get; set; }
-
-        public ISparkViewEngine Engine
-        {
-            get
-            {
-                if (_engine == null)
-                    SetEngine(new SparkViewEngine(Settings));
-
-                return _engine;
-            }
-            set { SetEngine(value); }
-        }
+       
 
         public ICacheServiceProvider CacheServiceProvider
         {
@@ -70,14 +65,10 @@ namespace Spark.Web.FubuMVC
             set { _cacheServiceProvider = value; }
         }
 
-        public void SetEngine(ISparkViewEngine engine)
+        public IViewFolder ViewFolder
         {
-            _descriptorBuilder = null;
-            _engine = engine;
-            if (_engine != null)
-            {
-                _engine.DefaultPageBaseType = typeof (SparkView).FullName;
-            }
+            get { return Engine.ViewFolder; }
+            set { Engine.ViewFolder = value; }
         }
 
         public SparkViewDescriptor CreateDescriptor(ActionContext actionContext, string viewName, string masterName, bool findDefaultMaster, ICollection<string> searchedLocations)
@@ -125,7 +116,7 @@ namespace Spark.Web.FubuMVC
             {
                 if (include.EndsWith("*"))
                 {
-                    foreach (string fileName in ViewFolder.ListViews(controllerName))
+                    foreach (string fileName in Engine.ViewFolder.ListViews(controllerName))
                     {
                         if (!string.Equals(Path.GetExtension(fileName), ".spark", StringComparison.InvariantCultureIgnoreCase))
                             continue;
