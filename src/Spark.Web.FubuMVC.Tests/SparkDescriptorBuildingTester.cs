@@ -25,8 +25,13 @@ namespace Spark.Web.FubuMVC.Tests
         {
             CompiledViewHolder.Current = null;
 
-            _factory = new SparkViewFactory(new SparkSettingsFactory()) { ViewFolder = new FileSystemViewFolder("FubuMvc.Tests.Views") }; ;
             _viewFolder = new InMemoryViewFolder();
+          
+            _factory = new SparkViewFactory(new SparkSettingsFactory())
+                           {
+                               ViewFolder = _viewFolder
+                           }; 
+
             var httpContext = MockRepository.GenerateStub<HttpContextBase>();
             _routeData = new RouteData();
             var controller = new StubController();
