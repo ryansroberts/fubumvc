@@ -6,6 +6,7 @@ using FubuMVC.Core.Runtime;
 using FubuMVC.StructureMap;
 using FubuMVC.View.Spark;
 using Microsoft.Practices.ServiceLocation;
+using Spark.Web.FubuMVC.Configuration;
 using Spark.Web.FubuMVC.ViewCreation;
 using StructureMap;
 namespace Spark.Web.FubuMVC.Bootstrap
@@ -49,6 +50,9 @@ namespace Spark.Web.FubuMVC.Bootstrap
 
                     x.For<ISparkViewBuilder>()
                         .Use<StructuremapSparkViewBuilder>();
+
+                    x.For<ISparkSettingsFactory>()
+                        .Use<SparkSettingsFactory>();
 
                     x.SetAllProperties(s =>
                         {

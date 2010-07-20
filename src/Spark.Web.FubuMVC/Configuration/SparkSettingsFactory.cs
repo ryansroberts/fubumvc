@@ -6,9 +6,12 @@ namespace Spark.Web.FubuMVC.Configuration
 
     public class SparkSettingsMerger
     {
-        public ISparkSettings Merge(ISparkSettings left, ISparkSettings right)
+        public ISparkSettings Merge(SparkSettings left, SparkSettings right)
         {
-            return left;
+            var merged = new SparkSettings();
+
+
+            return merged;
         }
     }
 

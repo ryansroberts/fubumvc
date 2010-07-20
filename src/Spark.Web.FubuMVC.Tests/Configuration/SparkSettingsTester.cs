@@ -30,8 +30,14 @@ namespace Spark.Web.FubuMVC.Tests.Configuration
 
             Merger.Merge(left, right);
 
-
-
+            left.NullBehaviour.ShouldEqual(right.NullBehaviour);
+            left.NullBehaviour.ShouldEqual(right.PageBaseType);
+            left.NullBehaviour.ShouldEqual(right.Prefix);
+            left.NullBehaviour.ShouldEqual(right.StatementMarker);
+            left.NullBehaviour.ShouldEqual(right.AutomaticEncoding);
+            left.ResourceMappings.ShouldEqual(right.ResourceMappings);
+            left.UseAssemblies.ShouldEqual(right.UseAssemblies);
+            left.UseNamespaces.ShouldEqual(right.UseNamespaces);
         }
     }
 }
