@@ -9,6 +9,7 @@ using NUnit.Framework.SyntaxHelpers;
 using Rhino.Mocks;
 using Spark.FileSystem;
 using Spark.Parser;
+using Spark.Web.FubuMVC.Configuration;
 using Spark.Web.FubuMVC.Tests.Controllers;
 using Spark.Web.FubuMVC.ViewLocation;
 
@@ -24,9 +25,13 @@ namespace Spark.Web.FubuMVC.Tests
         {
             CompiledViewHolder.Current = null;
 
-            _factory = new SparkViewFactory(new SparkSettings());
             _viewFolder = new InMemoryViewFolder();
-            _factory.ViewFolder = _viewFolder;
+          
+            _factory = new SparkViewFactory(new SparkSettingsFactory())
+                           {
+                               ViewFolder = _viewFolder
+                           }; 
+
             var httpContext = MockRepository.GenerateStub<HttpContextBase>();
             _routeData = new RouteData();
             var controller = new StubController();

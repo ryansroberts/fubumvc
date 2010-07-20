@@ -10,10 +10,12 @@ namespace FubuMVC.View.Spark
     public class SparkViewEngine<T> : IViewEngine<T> where T : class
     {
         private readonly IOutputWriter _outputWriter;
+        readonly ISparkViewBuilder _builder;
 
-        public SparkViewEngine(IOutputWriter outputWriter)
+        public SparkViewEngine(IOutputWriter outputWriter,ISparkViewBuilder builder)
         {
             _outputWriter = outputWriter;
+            _builder = builder;
         }
 
         public void RenderView(ViewPath viewPath, Action<T> configureView)
@@ -23,6 +25,8 @@ namespace FubuMVC.View.Spark
             var descriptor = new SparkViewDescriptor().AddTemplate(viewPath.ViewName);
 
             var view = (IFubuSparkView)engine.CreateInstance(descriptor);
+            _builder.Build(view);
+
             var configurableView = view as T;
             if (configurableView != null)
             {

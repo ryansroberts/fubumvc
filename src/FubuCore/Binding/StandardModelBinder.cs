@@ -34,7 +34,6 @@ namespace FubuCore.Binding
             context.FinishObject();
         }
 
-
         // Only exists for easier testing
         public void Populate(object target, IBindingContext context)
         {

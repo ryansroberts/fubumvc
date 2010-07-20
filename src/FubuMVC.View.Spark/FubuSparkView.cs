@@ -61,7 +61,7 @@ namespace FubuMVC.View.Spark
      
     }
 
-    public interface IFubuSparkView : ISparkView {}
+    public interface IFubuSparkView : ISparkView, IFubuPage { }
 
     public abstract class FubuSparkView : FubuSparkView<object>
     {

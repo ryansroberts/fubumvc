@@ -74,6 +74,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Configuration\SparkSettingsTester.cs" />
     <Compile Include="Controllers\BatchController.cs" />
     <Compile Include="Helpers\MockHttpContextBase.cs" />
     <Compile Include="Models\FakeViewModel.cs" />
@@ -91,6 +92,10 @@
     <ProjectReference Include="..\FubuMVC.Core\FubuMVC.Core.csproj">
       <Project>{E18FD922-0E7A-49CD-B89F-473826077B9D}</Project>
       <Name>FubuMVC.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FubuMVC.View.Spark\FubuMVC.View.Spark.csproj">
+      <Project>{EBB59413-A83E-4F8C-B235-F675578DCC36}</Project>
+      <Name>FubuMVC.View.Spark</Name>
     </ProjectReference>
     <ProjectReference Include="..\HtmlTags\HtmlTags.csproj">
       <Project>{F01C84F2-6E41-404C-AC8D-BF189A9EC05B}</Project>

@@ -20,7 +20,6 @@ namespace Spark.Web.FubuMVC.Bootstrap
             Views.Facility(new SparkViewFacility(viewFactory, actionType => actionType.Name.EndsWith("Controller")))
                 .TryToAttach(x => x.BySparkViewDescriptors(action => action.RemoveSuffix("Controller")));
 
-            Services(s => s.SetServiceIfNone<IFubuViewActivator,SparkViewActivator>());
         }
     }
 }

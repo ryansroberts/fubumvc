@@ -1,10 +1,36 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using FubuMVC.Core.Registration.Nodes;
+using FubuMVC.View.Spark;
 using NUnit.Framework;
 using Spark.FileSystem;
+using Spark.Web.FubuMVC.Configuration;
 using Spark.Web.FubuMVC.Tests.Controllers;
 
 namespace Spark.Web.FubuMVC.Tests
 {
+
+    public class TestSparkSettingsFactory : ISparkSettingsFactory
+    {
+        SparkSettings _settings;
+
+        public TestSparkSettingsFactory()
+        {
+            _settings = new SparkSettings();
+        }
+
+        public ISparkSettings GetSettingsForActionCall(ActionCall call)
+        {
+            return _settings;
+        }
+
+        public ISparkSettings GetSettings()
+        {
+            return _settings;
+        }
+    }
+
     [TestFixture]
     public class SparkBatchCompilationTester
     {
@@ -15,9 +41,7 @@ namespace Spark.Web.FubuMVC.Tests
         [SetUp]
         public void SetUp()
         {
-            var settings = new SparkSettings();
-
-            _factory = new SparkViewFactory(settings) { ViewFolder = new FileSystemViewFolder("FubuMVC.Tests.Views") };
+            _factory = new SparkViewFactory(new TestSparkSettingsFactory()) { ViewFolder = new FileSystemViewFolder("FubuMvc.Tests.Views") }; ;
         }
 
         #endregion
